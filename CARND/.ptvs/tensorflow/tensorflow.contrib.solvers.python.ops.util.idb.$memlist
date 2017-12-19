@@ -1,0 +1,13 @@
+collections
+constant_op
+l2norm
+absolute_import
+l2normalize
+l2norm_squared
+division
+math_ops
+print_function
+create_operator
+nn_ops
+dot
+array_ops

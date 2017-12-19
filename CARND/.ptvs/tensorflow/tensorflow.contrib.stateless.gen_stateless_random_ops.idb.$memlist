@@ -1,0 +1,11 @@
+_op_def_pb2
+_InitOpDefLibrary
+_op_def_library
+stateless_random_uniform
+_collections
+stateless_truncated_normal
+_op_def_lib
+_common_shapes
+stateless_random_normal
+_ops
+_op_def_registry

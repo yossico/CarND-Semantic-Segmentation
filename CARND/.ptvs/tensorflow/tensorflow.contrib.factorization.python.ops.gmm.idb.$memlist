@@ -1,0 +1,17 @@
+gmm_ops
+estimator
+math_ops
+array_ops
+framework
+model_fn_lib
+state_ops
+absolute_import
+np
+print_function
+division
+checkpoint_utils
+GMM
+constant_op
+variables
+with_dependencies
+_streaming_sum

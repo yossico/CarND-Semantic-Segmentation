@@ -1,0 +1,14 @@
+_op_def_pb2
+_InitOpDefLibrary
+sparse_feature_cross_v2
+_sparse_feature_cross_v2_outputs
+_collections
+_SparseFeatureCrossV2Output
+sparse_feature_cross
+_sparse_feature_cross_outputs
+_common_shapes
+_op_def_library
+_ops
+_SparseFeatureCrossOutput
+_op_def_registry
+_op_def_lib

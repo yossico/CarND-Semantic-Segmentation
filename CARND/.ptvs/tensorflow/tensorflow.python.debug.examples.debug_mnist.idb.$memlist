@@ -1,0 +1,16 @@
+sys
+tf_debug
+input_data
+FLAGS
+HIDDEN_SIZE
+absolute_import
+parser
+print_function
+division
+RAND_SEED
+argparse
+NUM_LABELS
+main
+unparsed
+IMAGE_SIZE
+tf

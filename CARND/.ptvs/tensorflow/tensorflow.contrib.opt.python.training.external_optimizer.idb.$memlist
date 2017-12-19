@@ -1,0 +1,16 @@
+np
+ScipyOptimizerInterface
+_prod
+_get_shape_tuple
+_accumulate
+ops
+_compute_gradients
+__all__
+logging
+ExternalOptimizerInterface
+print_function
+division
+array_ops
+variables
+gradients
+absolute_import

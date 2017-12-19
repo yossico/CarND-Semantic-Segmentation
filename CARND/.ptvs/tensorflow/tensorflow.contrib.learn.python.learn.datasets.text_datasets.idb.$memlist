@@ -1,0 +1,11 @@
+gfile
+DBPEDIA_URL
+os
+absolute_import
+load_dbpedia
+tarfile
+np
+division
+maybe_download_dbpedia
+print_function
+base

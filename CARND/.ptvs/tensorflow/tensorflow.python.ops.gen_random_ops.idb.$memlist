@@ -1,0 +1,17 @@
+_common_shapes
+_random_standard_normal
+_op_def_pb2
+_random_shuffle
+_op_def_registry
+multinomial
+_op_def_lib
+_random_uniform
+_collections
+_InitOpDefLibrary
+_parameterized_truncated_normal
+_random_uniform_int
+_random_gamma
+_random_poisson
+_ops
+_op_def_library
+_truncated_normal

@@ -1,0 +1,11 @@
+_op_def_pb2
+_skip_gram_generate_candidates_outputs
+_InitOpDefLibrary
+_collections
+skip_gram_generate_candidates
+_SkipGramGenerateCandidatesOutput
+_common_shapes
+_op_def_library
+_ops
+_op_def_registry
+_op_def_lib

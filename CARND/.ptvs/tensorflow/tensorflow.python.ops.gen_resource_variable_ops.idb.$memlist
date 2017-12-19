@@ -1,0 +1,17 @@
+resource_gather
+_InitOpDefLibrary
+assign_sub_variable_op
+_op_def_pb2
+_op_def_registry
+read_variable_op
+assign_variable_op
+_collections
+destroy_resource_op
+assign_add_variable_op
+_common_shapes
+resource_scatter_add
+var_handle_op
+var_is_initialized_op
+_ops
+_op_def_library
+_op_def_lib

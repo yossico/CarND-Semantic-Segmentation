@@ -1,0 +1,13 @@
+TensorShape
+compat
+scalar
+absolute_import
+matrix
+as_dimension
+Dimension
+as_shape
+print_function
+vector
+unknown_shape
+tensor_shape_pb2
+division

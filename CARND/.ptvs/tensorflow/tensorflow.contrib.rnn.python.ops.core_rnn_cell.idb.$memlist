@@ -1,0 +1,17 @@
+init_ops
+RNNCell
+embedding_ops
+OutputProjectionWrapper
+EmbeddingWrapper
+_linear
+ops
+absolute_import
+vs
+logging
+print_function
+division
+array_ops
+_like_rnncell
+math
+InputProjectionWrapper
+rnn_cell_impl

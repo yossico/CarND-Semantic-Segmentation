@@ -1,0 +1,9 @@
+os
+absolute_import
+gzip
+division
+print_function
+tf
+read_data_sets
+tempfile
+numpy

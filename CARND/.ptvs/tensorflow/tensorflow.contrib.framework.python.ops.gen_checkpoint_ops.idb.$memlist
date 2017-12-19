@@ -1,0 +1,12 @@
+_op_def_pb2
+_InitOpDefLibrary
+_GenerateVocabRemappingOutput
+_generate_vocab_remapping_outputs
+load_and_remap_matrix
+_collections
+_op_def_lib
+generate_vocab_remapping
+_common_shapes
+_op_def_library
+_ops
+_op_def_registry

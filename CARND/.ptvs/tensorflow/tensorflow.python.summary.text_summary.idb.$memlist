@@ -1,0 +1,13 @@
+PLUGIN_NAME
+tensor_summary
+namedtuple
+absolute_import
+summary_pb2
+json
+division
+plugin_asset
+print_function
+_TextPluginData
+TextSummaryPluginAsset
+dtypes
+text_summary

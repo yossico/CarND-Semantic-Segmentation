@@ -1,0 +1,17 @@
+_get_shape
+xrange
+print_function
+_total_size
+math_ops
+_transpose_if_necessary
+re
+einsum
+absolute_import
+logging
+_reshape_if_necessary
+division
+array_ops
+lbeta
+_exponential_space_einsum
+_einsum_reduction
+ops

@@ -1,0 +1,12 @@
+math
+NUM_CLASSES
+IMAGE_SIZE
+absolute_import
+loss
+division
+inference
+print_function
+IMAGE_PIXELS
+tf
+training
+evaluation

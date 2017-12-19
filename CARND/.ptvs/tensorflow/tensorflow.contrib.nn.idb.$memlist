@@ -1,0 +1,16 @@
+deprecated_flipped_sigmoid_cross_entropy_with_logits
+print_function
+nn
+math_ops
+deprecated_flipped_softmax_cross_entropy_with_logits
+remove_undocumented
+dtypes
+absolute_import
+embedding_ops
+division
+array_ops
+deprecated_flipped_sparse_softmax_cross_entropy_with_logits
+__name__
+python
+rank_sampled_softmax_loss
+ops

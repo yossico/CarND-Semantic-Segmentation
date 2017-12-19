@@ -1,0 +1,14 @@
+_DEFAULT_IMAGE_MIMETYPE
+six
+http_util
+absolute_import
+plugin_util
+division
+wrappers
+print_function
+_IMGHDR_TO_MIMETYPE
+imghdr
+metadata
+urllib
+base_plugin
+ImagesPlugin

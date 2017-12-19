@@ -1,0 +1,10 @@
+get_readme
+absolute_import
+find_packages
+tensorboard
+division
+print_function
+CONSOLE_SCRIPTS
+REQUIRED_PACKAGES
+sys
+setup

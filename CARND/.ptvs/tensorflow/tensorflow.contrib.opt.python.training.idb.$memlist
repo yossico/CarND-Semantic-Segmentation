@@ -1,0 +1,7 @@
+lazy_adam_optimizer
+variable_clipping_optimizer
+nadam_optimizer
+delay_compensated_gradient_descent
+drop_stale_gradient_optimizer
+moving_average_optimizer
+external_optimizer

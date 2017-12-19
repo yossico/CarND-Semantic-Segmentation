@@ -1,0 +1,14 @@
+TransposeBenchmark
+constant_op
+variables
+session_lib
+absolute_import
+np
+division
+build_graph
+print_function
+control_flow_ops
+time
+ops
+array_ops
+test

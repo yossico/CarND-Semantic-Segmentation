@@ -1,0 +1,10 @@
+__author__
+Mapping
+MessageMap
+MutableMapping
+RepeatedCompositeFieldContainer
+collections
+RepeatedScalarFieldContainer
+BaseContainer
+sys
+ScalarMap

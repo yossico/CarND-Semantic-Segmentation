@@ -1,0 +1,10 @@
+mnist_softmax_xla
+mnist_deep
+mnist
+fully_connected_feed
+division
+print_function
+mnist_softmax
+absolute_import
+mnist_with_summaries
+input_data

@@ -1,0 +1,12 @@
+_op_def_pb2
+_NearestNeighborsOutput
+_nearest_neighbors_outputs
+_op_def_library
+_collections
+_op_def_lib
+_InitOpDefLibrary
+nearest_neighbors
+_common_shapes
+kmeans_plus_plus_initialization
+_ops
+_op_def_registry

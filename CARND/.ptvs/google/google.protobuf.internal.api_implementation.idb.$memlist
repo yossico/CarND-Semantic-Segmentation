@@ -1,0 +1,15 @@
+IsPythonDefaultSerializationDeterministic
+Version
+os
+_implementation_version
+Type
+_python_deterministic_proto_serialization
+_default_implementation_type
+_implementation_version_str
+_proto_extension_modules_exist_in_build
+_api_version
+warnings
+_implementation_type
+_use_fast_cpp_protos
+_api_implementation
+sys

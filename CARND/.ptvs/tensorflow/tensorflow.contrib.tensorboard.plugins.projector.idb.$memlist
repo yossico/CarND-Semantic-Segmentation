@@ -1,0 +1,15 @@
+text_format
+SpriteMetadata
+os
+absolute_import
+descriptor_pb2
+sys
+file_io
+division
+ValueError
+print_function
+DESCRIPTOR
+visualize_embeddings
+EmbeddingInfo
+ProjectorConfig
+projector_config_pb2

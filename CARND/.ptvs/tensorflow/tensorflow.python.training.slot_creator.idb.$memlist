@@ -1,0 +1,14 @@
+create_zeros_slot
+variables
+absolute_import
+variable_scope
+init_ops
+create_slot_with_initializer
+division
+print_function
+_create_slot_var
+ops
+resource_variable_ops
+_is_resource
+array_ops
+create_slot

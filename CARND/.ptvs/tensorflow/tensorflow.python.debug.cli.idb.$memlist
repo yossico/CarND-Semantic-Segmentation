@@ -1,0 +1,13 @@
+profile_analyzer_cli
+base_ui
+command_parser
+curses_ui
+debugger_cli_common
+tensor_format
+ui_factory
+curses_widgets
+cli_shared
+offline_analyzer
+stepper_cli
+analyzer_cli
+readline_ui

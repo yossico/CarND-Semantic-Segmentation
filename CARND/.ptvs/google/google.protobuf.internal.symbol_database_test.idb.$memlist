@@ -1,0 +1,6 @@
+symbol_database
+SymbolDatabaseTest
+unittest
+descriptor
+descriptor_pool
+unittest_pb2

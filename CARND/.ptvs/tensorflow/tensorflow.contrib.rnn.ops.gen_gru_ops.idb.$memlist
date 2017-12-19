@@ -1,0 +1,14 @@
+_op_def_pb2
+gru_block_cell_grad
+_GRUBlockCellGradOutput
+_gru_block_cell_outputs
+_collections
+_op_def_lib
+gru_block_cell
+_InitOpDefLibrary
+_common_shapes
+_op_def_library
+_ops
+_gru_block_cell_grad_outputs
+_op_def_registry
+_GRUBlockCellOutput
