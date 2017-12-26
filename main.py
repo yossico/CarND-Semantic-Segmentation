@@ -24,9 +24,9 @@ def load_vgg(sess, vgg_path):
     :param vgg_path: Path to vgg folder, containing "variables/" and "saved_model.pb"
     :return: Tuple of Tensors from VGG model (image_input, keep_prob, layer3_out, layer4_out, layer7_out)
     """
-    # TODO: Implement function
-    #   Use tf.saved_model.loader.load to load the model and weights
-    
+    # TODO: Implement function - basic layers -done
+    # Add skip layers
+    # Use tf.saved_model.loader.load to load the model and weights    
     vgg_tag = 'vgg16'
     tf.saved_model.loader.load(sess, [vgg_tag], vgg_path)
     vgg_input_tensor_name = 'image_input:0'
@@ -91,7 +91,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
 
 
 def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
-             correct_label, keep_prob, learning_rate):
+             correct_label, keep_prob, learning_rate, kprob, lrate):
     """
     Train neural network and print out the loss during training.
     :param sess: TF Session
@@ -106,8 +106,10 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     :param learning_rate: TF Placeholder for learning rate
     """
     # TODO: Implement function
+    LOGDIR = '.'
+    hparam = 'mylog.txt'
     summ = tf.summary.merge_all()
-    writer = tf.summary.FileWriter(LOGDIR + hparam)
+    writer = tf.summary.FileWriter(hparam)
     writer.add_graph(sess.graph)
 
     counter = 1
@@ -142,6 +144,9 @@ def run():
     data_dir = '.\data'
     runs_dir = '.\runs'
     l2_const = 0.002
+    kprob = 0.8 
+    lrate = 0.000075
+    
  # tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
@@ -156,7 +161,7 @@ def run():
         vgg_path = os.path.join(data_dir, 'vgg')
         # Create function to get batches
         get_batches_fn = helper.gen_batch_function(os.path.join(data_dir, 'data_road/training'), image_shape)
-
+        model_path = "./model"
         # OPTIONAL: Augment Images for better results
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
@@ -176,7 +181,7 @@ def run():
 
         sess.run(tf.global_variables_initializer())
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
-                correct_label, keep_prob, learning_rate, kprob, lrate, hparam)
+                correct_label, keep_prob, learning_rate, kprob, lrate)#, hparam)
 
         save_path = saver.save(sess, model_path)
         print("Model saved in file: %s" % save_path)
