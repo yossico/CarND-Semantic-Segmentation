@@ -63,7 +63,7 @@ def gen_batch_function(data_folder, image_shape):
     Generate function to create batches of training data
     :param data_folder: Path to folder that contains all the datasets
     :param image_shape: Tuple - Shape of image
-    :return:
+    :return: 
     """
     def get_batches_fn(batch_size):
         """
@@ -127,10 +127,10 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
 
 def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image):
     # Make folder for current run
-    output_dir = os.path.join(runs_dir, str(time.time()))
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
-    os.makedirs(output_dir)
+    output_dir = '.' #os.path.join(runs_dir, str(time.time()))
+   # if os.path.exists(output_dir):
+   #     shutil.rmtree(output_dir)
+   # os.makedirs(output_dir)
 
     # Run NN on test images and save them to HD
     print('Training Finished. Saving test images to: {}'.format(output_dir))

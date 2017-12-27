@@ -3,7 +3,7 @@ import tensorflow as tf
 import helper
 import warnings
 from distutils.version import LooseVersion
-#import project_tests as tests
+import project_tests as tests
 
 
 # Check TensorFlow Version
@@ -15,6 +15,39 @@ if not tf.test.gpu_device_name():
     warnings.warn('No GPU found. Please use a GPU to train your neural network.')
 else:
     print('Default GPU Device: {}'.format(tf.test.gpu_device_name()))
+
+
+
+#1x1 convolution 
+def conv_1x1(x, num_outputs, name="conv_1x1"):
+    kernel_size = 1
+    stride = 1
+    initializer = tf.truncated_normal_initializer(stddev=0.01)
+    conv_1x1_out = tf.layers.conv2d(x, num_outputs,
+                        kernel_size=(1, 1),
+                        strides=(1, 1),
+                        padding='SAME',                       
+                        kernel_initializer=initializer,
+                        kernel_regularizer=tf.contrib.layers.l2_regularizer(0.01))
+    return conv_1x1_out
+
+# decoding/upsampling the previous layer
+def decodelayer(x,filters,kernel_size,strides,name='decodelayer'):
+     with tf.name_scope(name):
+        initializer = tf.truncated_normal_initializer(stddev=0.01)
+        decode_out = tf.layers.conv2d_transpose(x,filters,kernel_size, strides,padding = 'SAME', kernel_initializer = initializer)
+        tf.summary.histogram(name, decode_out)
+        return decode_out
+
+def skiplayer(origin, destination, name="skip_Layer"):
+    """
+    connect encoder layers to decoder layers (skip connection)
+    :origin: 4-Rank tensor
+    :return: TF Operation
+    """
+    with tf.name_scope(name):
+        skip = tf.add(origin,destination)
+        return skip
 
 
 def load_vgg(sess, vgg_path):
@@ -40,9 +73,10 @@ def load_vgg(sess, vgg_path):
     layer3_out = graph.get_tensor_by_name(vgg_layer3_out_tensor_name)
     layer4_out = graph.get_tensor_by_name(vgg_layer4_out_tensor_name)
     layer7_out = graph.get_tensor_by_name(vgg_layer7_out_tensor_name)
-    return image_input, keep_prob, layer3_out, layer4_out, layer7_out
-#tests.test_load_vgg(load_vgg, tf)
 
+    return image_input, keep_prob, layer3_out, layer4_out, layer7_out
+tests.test_load_vgg(load_vgg, tf)
+#output = tf.layers.conv2d(input, num_classes, 1, strides=(1,1))
 
 def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     """
@@ -51,23 +85,26 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :param vgg_layer4_out: TF Tensor for VGG Layer 4 output
     :param vgg_layer3_out: TF Tensor for VGG Layer 7 output
     :param num_classes: Number of classes to classify
-    :return: The Tensor for the last layer of output
+    :return: The output layer
     """
     # TODO: Implement function
-    conv_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, padding= 'same', 
-                                kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
-    output1 = tf.layers.conv2d_transpose(conv_1x1, num_classes, 4, 2, padding = 'same', 
-                                         kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
-    output2 = tf.layers.conv2d_transpose(output1, num_classes, 4, strides = (2,2), padding = 'same', 
-                                         kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
-    layer_output = tf.layers.conv2d_transpose(output2, num_classes, 16, strides=(8,8), padding = 'same', 
-                                                 kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
-    
-    return layer_output
-#tests.test_layers(layers)
+    conv7_1x1 = conv_1x1(vgg_layer7_out,num_classes)
+    conv4_1x1 = conv_1x1(vgg_layer4_out,num_classes)
+    conv3_1x1 = conv_1x1(vgg_layer3_out,num_classes)
+
+    layer7dec = decodelayer(conv7_1x1,num_classes,5,2) 
+    layer4skip = skiplayer(layer7dec,conv4_1x1)
+
+    layer4dec = decodelayer(layer4skip,num_classes,5,2)
+    layer3skip = skiplayer(layer4dec,conv3_1x1)
+
+    model = decodelayer(layer3skip, num_classes,16,8)
+
+    return model
+tests.test_layers(layers)
 
 
-def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const):
+def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const = 0.01):
     """
     Build the TensorFLow loss and optimizer operations.
     :param nn_last_layer: TF Tensor of the last layer in the neural network
@@ -87,7 +124,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
     train_op = optimizer.minimize(loss=loss)
 
     return logits, train_op, cross_entropy_loss 
-#tests.test_optimize(optimize)
+tests.test_optimize(optimize)
 
 
 def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
@@ -111,13 +148,13 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     summ = tf.summary.merge_all()
     writer = tf.summary.FileWriter(hparam)
     writer.add_graph(sess.graph)
-
+     
     counter = 1
     for epoch_i in range(epochs):
 
         for images, correct_labels in get_batches_fn(batch_size):
 
-            if counter % 10 == 0:
+            if (counter % 10) == 0:
 
                 # Run optimizer and get loss
                 _, loss,s = sess.run([train_op, cross_entropy_loss,summ],
@@ -134,7 +171,8 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
                                                  correct_label: correct_labels,
                                                  keep_prob: kprob,
                                                  learning_rate: lrate})
-
+            print("loss", loss, " epoch_i ", epoch_i, " epochs ", epochs)
+           
             counter += 1                
 
 
@@ -147,7 +185,7 @@ def run():
     kprob = 0.8 
     lrate = 0.000075
     
- # tests.test_for_kitti_dataset(data_dir)
+    tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
@@ -167,7 +205,7 @@ def run():
 
         # TODO: Build NN using load_vgg, layers, and optimize function
         epochs = 50
-        batch_size = 5
+        batch_size = 15
 
         input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
         layer_output = layers(layer3_out, layer4_out, layer7_out,num_classes)
