@@ -61,6 +61,7 @@ def load_vgg(sess, vgg_path):
     # Add skip layers
     # Use tf.saved_model.loader.load to load the model and weights    
     vgg_tag = 'vgg16'
+    print(vgg_path)
     tf.saved_model.loader.load(sess, [vgg_tag], vgg_path)
     vgg_input_tensor_name = 'image_input:0'
     vgg_keep_prob_tensor_name = 'keep_prob:0'
@@ -76,7 +77,7 @@ def load_vgg(sess, vgg_path):
 
     return image_input, keep_prob, layer3_out, layer4_out, layer7_out
 tests.test_load_vgg(load_vgg, tf)
-#output = tf.layers.conv2d(input, num_classes, 1, strides=(1,1))
+
 
 def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     """
@@ -182,7 +183,7 @@ def run():
     data_dir = '.\data'
     runs_dir = '.\runs'
     l2_const = 0.002
-    kprob = 0.8 
+    kprob = 0.9 
     lrate = 0.000075
     
     tests.test_for_kitti_dataset(data_dir)
@@ -204,8 +205,8 @@ def run():
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
         # TODO: Build NN using load_vgg, layers, and optimize function
-        epochs = 50
-        batch_size = 15
+        epochs = 9
+        batch_size = 20
 
         input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
         layer_output = layers(layer3_out, layer4_out, layer7_out,num_classes)
@@ -227,7 +228,7 @@ def run():
         # TODO: Save inference data using helper.save_inference_samples
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
         # TODO: Save inference data using helper.save_inference_samples
-        #  helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
 
         # OPTIONAL: Apply the trained model to a video
 
