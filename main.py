@@ -192,8 +192,8 @@ def run():
         data_dir = '.\data'
         runs_dir = '.\runs'
     else:
-        data_dir = os.path.join(pathname,'/data')
-        runs_dir = os.path.join(pathname,'/runs')
+        data_dir = '/home/ubuntu/CarND-Semantic-Segmentation/data/'
+        runs_dir = '/home/ubuntu/CarND-Semantic-Segmentation/runs/'
 
     l2_const = 0.002
     kprob = 0.9 
@@ -209,49 +209,49 @@ def run():
     #  https://www.cityscapes-dataset.com/
 
     
-        # Path to vgg model
-        vgg_path = os.path.join(data_dir, 'vgg')
-        # Create function to get batches
-        get_batches_fn = helper.gen_batch_function(os.path.join(data_dir, 'data_road/training'), image_shape)
-        #model_path = "./model"
-        # OPTIONAL: Augment Images for better results
-        #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
+    # Path to vgg model
+    vgg_path = os.path.join(data_dir, 'vgg')
+    # Create function to get batches
+    get_batches_fn = helper.gen_batch_function(os.path.join(data_dir, 'data_road/training'), image_shape)
+    #model_path = "./model"
+    # OPTIONAL: Augment Images for better results
+    #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
-        # TODO: Build NN using load_vgg, layers, and optimize function
-        epochs = 20
-        batch_size = 20
+    # TODO: Build NN using load_vgg, layers, and optimize function
+    epochs = 2
+    batch_size = 20
 
-         # hyperparameter search
-        for l2_const in [0.002,0.005]:
-            for lrate in [0.0001,0.00005]:
-                for kprob in [0.8,0.9]:
-                    tf.reset_default_graph()
-                    with tf.Session() as sess:
-                        hparam = make_hparam_string(kprob=kprob,lrate=lrate,l2_const=l2_const)
-                        print('using param %s' % hparam)
-                        model_path = LOGDIR + hparam + "/model"
-                        print(model_path)
-                        input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
-                        layer_output = layers(layer3_out, layer4_out, layer7_out,num_classes)
-                        learning_rate = tf.placeholder(dtype = tf.float32)
-                        correct_label = tf.placeholder(dtype = tf.float32, shape = (None, None, None, num_classes))
+        # hyperparameter search
+    for l2_const in [0.002,0.005]:
+        for lrate in [0.0001,0.00005]:
+            for kprob in [0.8,0.9]:
+                tf.reset_default_graph()
+                with tf.Session() as sess:
+                    hparam = make_hparam_string(kprob=kprob,lrate=lrate,l2_const=l2_const)
+                    print('using param %s' % hparam)
+                    model_path = LOGDIR + hparam + "/model"
+                    print(model_path)
+                    input_image, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
+                    layer_output = layers(layer3_out, layer4_out, layer7_out,num_classes)
+                    learning_rate = tf.placeholder(dtype = tf.float32)
+                    correct_label = tf.placeholder(dtype = tf.float32, shape = (None, None, None, num_classes))
 
-                        logits, train_op, cross_entropy_loss = optimize(layer_output, correct_label, learning_rate, num_classes, l2_const)
-                         # 'Saver' op to save and restore all the variables
-                        saver = tf.train.Saver()
-                        # TODO: Train NN using the train_nn function
+                    logits, train_op, cross_entropy_loss = optimize(layer_output, correct_label, learning_rate, num_classes, l2_const)
+                        # 'Saver' op to save and restore all the variables
+                    saver = tf.train.Saver()
+                    # TODO: Train NN using the train_nn function
 
-                        sess.run(tf.global_variables_initializer())
-                        train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
-                                correct_label, keep_prob, learning_rate, kprob, lrate, hparam)
+                    sess.run(tf.global_variables_initializer())
+                    train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
+                            correct_label, keep_prob, learning_rate, kprob, lrate, hparam)
 
-                        save_path = saver.save(sess, model_path)
-                        print("Model saved in file: %s" % save_path)
+                    save_path = saver.save(sess, model_path)
+                    print("Model saved in file: %s" % save_path)
 
-                        # TODO: Save inference data using helper.save_inference_samples
-                        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+                    # TODO: Save inference data using helper.save_inference_samples
+                    helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
                         
-                        # OPTIONAL: Apply the trained model to a video
+                    # OPTIONAL: Apply the trained model to a video
 
 
 if __name__ == '__main__':
