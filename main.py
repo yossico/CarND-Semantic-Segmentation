@@ -186,7 +186,6 @@ def run():
     image_shape = (160, 576)
     
 
-    print(pathname)
     myos = platform.system()
     if (myos == 'Windows'):
         data_dir = '.\data'
@@ -194,10 +193,11 @@ def run():
     else:
         data_dir = '/home/ubuntu/CarND-Semantic-Segmentation/data/'
         runs_dir = '/home/ubuntu/CarND-Semantic-Segmentation/runs/'
-
-    l2_const = 0.002
-    kprob = 0.9 
-    lrate = 0.000075
+    
+    #set optimal values here after hyperparam optimization to generate optimal model (or used saved model...)
+    #l2_const = 0.002
+    #kprob = 0.9 
+    #lrate = 0.000075
     print(data_dir)
     tests.test_for_kitti_dataset(data_dir)
 
@@ -218,8 +218,9 @@ def run():
     #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
     # TODO: Build NN using load_vgg, layers, and optimize function
-    epochs = 2
-    batch_size = 20
+    epochs = 25
+    batch_size = 25
+    LOGDIR = '.'
 
         # hyperparameter search
     for l2_const in [0.002,0.005]:
