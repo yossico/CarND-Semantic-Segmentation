@@ -4,6 +4,8 @@ import helper
 import warnings
 from distutils.version import LooseVersion
 import project_tests as tests
+import platform
+import sys
 
 
 # Check TensorFlow Version
@@ -176,16 +178,27 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
            
             counter += 1                
 
+def make_hparam_string(kprob, lrate, l2_const):
+    return "kp_%.0E,lr_%.0E,l2_%.0E" % (kprob, lrate, l2_const)
 
 def run():
     num_classes = 2
     image_shape = (160, 576)
-    data_dir = '.\data'
-    runs_dir = '.\runs'
+    
+    pathname = os.path.dirname(sys.argv[0])
+    print(pathname)
+    myos = platform.system()
+    if (myos == 'Windows'):
+        data_dir = '.\data'
+        runs_dir = '.\runs'
+    else:
+        data_dir = os.path.join(pathname,'/data')
+        runs_dir = os.path.join(pathname,'/runs')
+
     l2_const = 0.002
     kprob = 0.9 
     lrate = 0.000075
-    
+    print(data_dir)
     tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
@@ -227,8 +240,7 @@ def run():
 
         # TODO: Save inference data using helper.save_inference_samples
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
-        # TODO: Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+
 
         # OPTIONAL: Apply the trained model to a video
 
